@@ -19,6 +19,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="<?= site_url('/logout') ?>">Logout</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= site_url('/gudang') ?>">cek gudang</a>
+                        </li>
                     <?php else: ?>
                         <li class="nav-item">
                             <a class="nav-link" href="<?= site_url('/login') ?>">Login</a>
