@@ -54,7 +54,7 @@ class GudangController extends BaseController
         $validation->setRules([
             'name' => 'required',
             'kategori' => 'required',
-            'jumlah' => 'required|integer',
+            'jumlah' => 'required|integer|greater_than_equal_to[0]',
             'satuan' => 'required',
             'tanggal_masuk' => 'required|valid_date',
             'tanggal_kadaluarsa' => 'required|valid_date',
@@ -91,6 +91,64 @@ class GudangController extends BaseController
         $GudangModel->insert($data);
 
         return redirect()->to(site_url('gudang'))->with('success', 'Bahan baku berhasil ditambahkan!');
+    }
 
+    public function edit($id)
+    {
+        $GudangModel = new GudangModel();
+        $bahanBaku = $GudangModel->find($id);
+
+        if (!$bahanBaku) {
+            return redirect()->to(site_url('gudang'))->with('error', 'Data tidak ditemukan');
+        }
+
+        $data['bahanBaku'] = $bahanBaku;
+        return view('bahan_baku/edit', $data);
+    }
+
+    public function update($id)
+    {
+        $GudangModel = new GudangModel();
+
+        $validation = \Config\Services::validation();
+        $validation->setRules([
+            'name' => 'required',
+            'kategori' => 'required',
+            'jumlah' => 'required|integer|greater_than_equal_to[0]',
+            'satuan' => 'required',
+            'tanggal_masuk' => 'required|valid_date',
+            'tanggal_kadaluarsa' => 'required|valid_date',
+        ]);
+
+        if (!$validation->withRequest($this->request)->run()) {
+            return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+        }
+
+        $data = [
+            'nama' => $this->request->getPost('name'),
+            'kategori' => $this->request->getPost('kategori'),
+            'jumlah' => $this->request->getPost('jumlah'),
+            'satuan' => $this->request->getPost('satuan'),
+            'tanggal_masuk' => $this->request->getPost('tanggal_masuk'),
+            'tanggal_kadaluarsa' => $this->request->getPost('tanggal_kadaluarsa'),
+        ];
+
+        $today = new \DateTime();
+        $kadaluarsa = new \DateTime($data['tanggal_kadaluarsa']);
+        $jumlah = (int)$data['jumlah'];
+
+        if ($jumlah == 0) {
+            $data['status'] = 'habis';
+        } elseif ($today >= $kadaluarsa) {
+            $data['status'] = 'kadaluarsa';
+        } elseif ($today->diff($kadaluarsa)->days <= 3) {
+            $data['status'] = 'segera_kadaluarsa';
+        } else {
+            $data['status'] = 'tersedia';
+        }
+
+        $GudangModel->update($id, $data);
+
+        return redirect()->to(site_url('gudang'))->with('success', 'Data bahan baku berhasil diperbarui!');
     }
 }

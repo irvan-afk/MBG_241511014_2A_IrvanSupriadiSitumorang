@@ -30,7 +30,7 @@
     </nav>
     <div class="card">
     <div class="card-header">
-        <h4>Tambah Bahan Baku</h4>
+        <h4>Edit Bahan Baku</h4>
     </div>
     <div class="card-body">
         <?php if(session()->getFlashdata('errors')): ?>
@@ -41,40 +41,50 @@
             </div>
         <?php endif; ?>
 
-        <form action = "<?= site_url('gudang/Store') ?>" method = "post">
+        <form action="<?= site_url('gudang/update/' . $bahanBaku['id']) ?>" method="post">
             <div class="mb-3">
-                <label for="nama" class="form-label">nama</label>
-                <input type="text" name="name" id="name" class="form-control">
+                <label for="name" class="form-label">Nama</label>
+                <input type="text" name="name" id="name" class="form-control"
+                    value="<?= esc($bahanBaku['nama']) ?>">
             </div>
+
             <div class="mb-3">
-                <label for="kategori" class="form-label">kategori</label>
-                <input type="text" name="kategori" id="kategori" class="form-control">
+                <label for="kategori" class="form-label">Kategori</label>
+                <input type="text" name="kategori" id="kategori" class="form-control"
+                    value="<?= esc($bahanBaku['kategori']) ?>">
             </div>
+
             <div class="mb-3">
-                <label for="jumlah" class="form-label">jumlah</label>
-                <input type="number " name="jumlah" id="jumlah" class="form-control">
+                <label for="jumlah" class="form-label">Jumlah</label>
+                <input type="number" name="jumlah" id="jumlah" class="form-control"
+                    value="<?= esc($bahanBaku['jumlah']) ?>">
             </div>
+
             <div class="mb-3">
                 <label for="satuan" class="form-label">Satuan</label>
                 <select name="satuan" id="satuan" class="form-select">
-                    <option value="">-- Pilih Satuan --</option>
-                    <option value="kg">Kg</option>
-                    <option value="liter">Liter</option>
-                    <option value="butir">Butir</option>
-                    <option value="ikat">Ikat</option>
-                    <option value="potong">Potong</option>
+                    <option value="kg" <?= ($bahanBaku['satuan'] == 'kg') ? 'selected' : '' ?>>Kg</option>
+                    <option value="liter" <?= ($bahanBaku['satuan'] == 'liter') ? 'selected' : '' ?>>Liter</option>
+                    <option value="butir" <?= ($bahanBaku['satuan'] == 'butir') ? 'selected' : '' ?>>Butir</option>
+                    <option value="ikat" <?= ($bahanBaku['satuan'] == 'ikat') ? 'selected' : '' ?>>Ikat</option>
+                    <option value="potong" <?= ($bahanBaku['satuan'] == 'potong') ? 'selected' : '' ?>>Potong</option>
                 </select>
             </div>
+
             <div class="mb-3">
-                <label for="tanggal_masuk" class="form-label">tanggal_masuk</label>
-                <input type="date" name="tanggal_masuk" id="tanggal_masuk" class="form-control">
+                <label for="tanggal_masuk" class="form-label">Tanggal Masuk</label>
+                <input type="date" name="tanggal_masuk" id="tanggal_masuk" class="form-control"
+                    value="<?= esc($bahanBaku['tanggal_masuk']) ?>">
             </div>
+
             <div class="mb-3">
-                <label for="tanggal_kadaluarsa" class="form-label">tanggal kadaluarsa</label>
-                <input type="date" name="tanggal_kadaluarsa" id="tanggal_kadaluarsa" class="form-control">
+                <label for="tanggal_kadaluarsa" class="form-label">Tanggal Kadaluarsa</label>
+                <input type="date" name="tanggal_kadaluarsa" id="tanggal_kadaluarsa" class="form-control"
+                    value="<?= esc($bahanBaku['tanggal_kadaluarsa']) ?>">
             </div>
+
             <a href="<?= site_url('gudang') ?>" class="btn btn-secondary">Batal</a>
-            <button type="submit" class="btn btn-primary">Simpan</button>
+            <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
         </form>
     </div>
 </div>
