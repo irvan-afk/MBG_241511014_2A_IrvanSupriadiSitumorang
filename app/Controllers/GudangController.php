@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\GudangModel;
+use App\Models\PermintaanModel;
+use App\Models\PermintaanDetailModel;
 use DateTime;
 
 class GudangController extends BaseController
@@ -174,5 +176,84 @@ class GudangController extends BaseController
         $GudangModel->delete($id);
 
         return redirect()->to(site_url('gudang'))->with('success', 'Data bahan baku berhasil dihapus.');
+    }
+
+    public function permintaanList()
+    {
+        $permintaanModel = new PermintaanModel();
+        $permintaanDetailModel = new PermintaanDetailModel();
+
+        $data['permintaan'] = $permintaanModel
+            ->select('permintaan.*, user.name AS pemohon')
+            ->join('user', 'user.id = permintaan.pemohon_id')
+            ->where('permintaan.status', 'menunggu')
+            ->findAll();
+
+        // Ambil detail permintaan (bahan yang diminta)
+        foreach ($data['permintaan'] as &$req) {
+            $req['detail'] = $permintaanDetailModel
+                ->select('permintaan_detail.*, bahan_baku.nama AS nama_bahan, bahan_baku.satuan')
+                ->join('bahan_baku', 'bahan_baku.id = permintaan_detail.bahan_id')
+                ->where('permintaan_id', $req['id'])
+                ->findAll();
+        }
+
+        return view('bahan_baku/permintaan_list', $data);
+    }
+
+    public function setujuiPermintaan($id)
+    {
+        $permintaanModel = new PermintaanModel();
+        $permintaanDetailModel = new PermintaanDetailModel();
+        $bahanModel = new GudangModel();
+
+        $permintaan = $permintaanModel->find($id);
+        if (!$permintaan) {
+            return redirect()->back()->with('error', 'Permintaan tidak ditemukan.');
+        }
+
+        // Ambil detail permintaan
+        $detail = $permintaanDetailModel->where('permintaan_id', $id)->findAll();
+
+        foreach ($detail as $d) {
+            $bahan = $bahanModel->find($d['bahan_id']);
+            if ($bahan) {
+                $stokBaru = $bahan['jumlah'] - $d['jumlah_diminta'];
+                if ($stokBaru < 0) $stokBaru = 0;
+
+                // Update stok
+                $bahanModel->update($bahan['id'], [
+                    'jumlah' => $stokBaru,
+                    'status' => $stokBaru == 0 ? 'habis' : $bahan['status']
+                ]);
+            }
+        }
+
+        // Ubah status permintaan jadi disetujui
+        $permintaanModel->update($id, ['status' => 'disetujui']);
+
+        return redirect()->to(site_url('gudang/permintaan'))->with('success', 'Permintaan berhasil disetujui dan stok diperbarui.');
+    }
+
+    public function tolakPermintaan($id)
+    {
+        $alasan = $this->request->getPost('alasan');
+        if (empty($alasan)) {
+            return redirect()->back()->with('error', 'Alasan penolakan wajib diisi.');
+        }
+
+        $permintaanModel = new PermintaanModel();
+        $permintaan = $permintaanModel->find($id);
+        if (!$permintaan) {
+            return redirect()->back()->with('error', 'Permintaan tidak ditemukan.');
+        }
+
+       
+        $permintaanModel->update($id, [
+            'status' => 'ditolak',
+            'alasan_penolakan' => $alasan
+        ]);
+
+        return redirect()->to(site_url('gudang/permintaan'))->with('success', 'Permintaan telah ditolak.');
     }
 }

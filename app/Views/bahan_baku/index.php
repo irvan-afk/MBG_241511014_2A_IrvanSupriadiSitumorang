@@ -16,13 +16,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <?php if(session()->get('isLoggedIn')): ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="<?= site_url('/logout') ?>">Logout</a>
-                        </li>
-                    <?php else: ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="<?= site_url('/login') ?>">Login</a>
-                        </li>
+                    <li class="nav-item"><a class="nav-link" href="<?= site_url('/dashboard') ?>">Dashboard</a> </li>
+                    <li class="nav-item"><a class="nav-link active" href="<?= site_url('/gudang') ?>">Cek Gudang</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?= site_url('/gudang/permintaan') ?>">Permintaan</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?= site_url('/logout') ?>">Logout</a></li>
                     <?php endif; ?>
                 </ul>
             </div>

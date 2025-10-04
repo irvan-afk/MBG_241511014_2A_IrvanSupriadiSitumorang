@@ -21,3 +21,6 @@ $routes->post('gudang/update/(:num)', 'GudangController::update/$1', ['filter' =
 $routes->get('gudang/delete/(:num)', 'GudangController::deleteConfirm/$1', ['filter' => 'auth:gudang']);
 $routes->post('gudang/delete/(:num)', 'GudangController::delete/$1', ['filter' => 'auth:gudang']);
 
+$routes->get('gudang/permintaan', 'GudangController::permintaanList', ['filter' => 'auth:gudang']);
+$routes->post('gudang/permintaan/setujui/(:num)', 'GudangController::setujuiPermintaan/$1', ['filter' => 'auth:gudang']);
+$routes->post('gudang/permintaan/tolak/(:num)', 'GudangController::tolakPermintaan/$1', ['filter' => 'auth:gudang']);
