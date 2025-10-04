@@ -48,28 +48,35 @@
                         <th>kategori</th>
                         <th>jumlah</th>
                         <th>satuan </th>
-                        <th>tanggal_masuk </th>
-                        <th>tanggal_kadaluarsa</th>
+                        <th>tanggal masuk </th>
+                        <th>tanggal kadaluarsa</th>
                         <th>status</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach($bahan_baku as $BahanBaku): ?>
-                    <tr>
-                        <td><?= $BahanBaku['id'] ?></td>
-                        <td><?= esc($BahanBaku['nama']) ?></td>
-                        <td><?= esc($BahanBaku['kategori']) ?></td>
-                        <td><?= esc($BahanBaku['jumlah']) ?></td>
-                        <td><?= esc($BahanBaku['satuan']) ?></td>
-                        <td><?= esc($BahanBaku['tanggal_masuk']) ?></td>
-                        <td><?= esc($BahanBaku['tanggal_kadaluarsa']) ?></td>
-                        <td><?= esc($BahanBaku['status']) ?></td>
-                        <td>
-                            <a href="<?= site_url('BahanBaku/edit/' . $BahanBaku['id']) ?>" class="btn btn-warning btn-sm">Edit</a>
-                            <a href="<?= site_url('BahanBaku/delete/' . $BahanBaku['id']) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?');">Hapus</a>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
+                    <?php if (! empty($bahan_baku)): ?>
+                        <?php foreach($bahan_baku as $BahanBaku): ?>
+                        <tr>
+                            <td><?= $BahanBaku['id'] ?></td>
+                            <td><?= esc($BahanBaku['nama']) ?></td>
+                            <td><?= esc($BahanBaku['kategori']) ?></td>
+                            <td><?= esc($BahanBaku['jumlah']) ?></td>
+                            <td><?= esc($BahanBaku['satuan']) ?></td>
+                            <td><?= esc($BahanBaku['tanggal_masuk']) ?></td>
+                            <td><?= esc($BahanBaku['tanggal_kadaluarsa']) ?></td>
+                            <td><?= esc($BahanBaku['status']) ?></td>
+                            <td>
+                                <a href="<?= site_url('BahanBaku/edit/' . $BahanBaku['id']) ?>" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="<?= site_url('BahanBaku/delete/' . $BahanBaku['id']) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?');">Hapus</a>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    <?php else:?>
+                        <tr>
+                            <td colspan="9" class="text-center">Bhan baku kosong</td>
+                        </tr>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>

@@ -41,7 +41,7 @@
             </div>
         <?php endif; ?>
 
-        <form action = "<?= site_url('BahanBaku/create') ?>" method = "post">
+        <form action = "<?= site_url('BahanBaku/Store') ?>" method = "post">
             <div class="mb-3">
                 <label for="nama" class="form-label">nama</label>
                 <input type="text" name="name" id="name" class="form-control">
