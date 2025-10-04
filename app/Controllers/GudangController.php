@@ -151,4 +151,28 @@ class GudangController extends BaseController
 
         return redirect()->to(site_url('gudang'))->with('success', 'Data bahan baku berhasil diperbarui!');
     }
+
+    public function deleteConfirm($id)
+    {
+        $GudangModel = new GudangModel();
+        $bahanBaku = $GudangModel->find($id);
+
+        $data['bahanBaku'] = $bahanBaku;
+        return view('bahan_baku/delete', $data);
+    }
+
+    public function delete($id)
+    {
+        $GudangModel = new GudangModel();
+        $bahanBaku = $GudangModel->find($id);
+
+        if ($bahanBaku['status'] !== 'kadaluarsa') {
+            return redirect()->to(site_url('gudang'))
+                ->with('error', 'Bahan baku dengan status "' . $bahanBaku['status'] . '" tidak dapat dihapus.');
+        }
+
+        $GudangModel->delete($id);
+
+        return redirect()->to(site_url('gudang'))->with('success', 'Data bahan baku berhasil dihapus.');
+    }
 }

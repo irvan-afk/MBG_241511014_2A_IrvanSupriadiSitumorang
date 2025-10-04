@@ -38,6 +38,8 @@
         <div class="card-body">
             <?php if(session()->getFlashdata('success')): ?>
                 <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
+            <?php elseif (session()->getFlashdata('error')): ?>
+                <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
             <?php endif; ?>
 
             <table class="table table-bordered">
@@ -68,7 +70,8 @@
                             <td><?= esc($BahanBaku['status']) ?></td>
                             <td>
                                 <a href="<?= site_url('gudang/edit/' . $BahanBaku['id']) ?>" class="btn btn-warning btn-sm">Edit</a>
-                                <a href="<?= site_url('gudang/delete/' . $BahanBaku['id']) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?');">Hapus</a>
+                                
+                                <a href="<?= site_url('gudang/delete/' . $BahanBaku['id']) ?>" class="btn btn-danger btn-sm">Hapus</a>
                             </td>
                         </tr>
                         <?php endforeach; ?>
