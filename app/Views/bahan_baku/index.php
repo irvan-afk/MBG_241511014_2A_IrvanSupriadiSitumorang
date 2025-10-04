@@ -32,7 +32,7 @@
         <div class="card-header">
             <div class="d-flex justify-content-between">
                 <h4>Daftar bahan baku</h4>
-                <a href="<?= site_url('BahanBaku/create') ?>" class="btn btn-primary btn-sm">tambah bahan baku</a>
+                <a href="<?= site_url('gudang/create') ?>" class="btn btn-primary btn-sm">tambah bahan baku</a>
             </div>
         </div>
         <div class="card-body">
@@ -67,8 +67,8 @@
                             <td><?= esc($BahanBaku['tanggal_kadaluarsa']) ?></td>
                             <td><?= esc($BahanBaku['status']) ?></td>
                             <td>
-                                <a href="<?= site_url('BahanBaku/edit/' . $BahanBaku['id']) ?>" class="btn btn-warning btn-sm">Edit</a>
-                                <a href="<?= site_url('BahanBaku/delete/' . $BahanBaku['id']) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?');">Hapus</a>
+                                <a href="<?= site_url('gudang/edit/' . $BahanBaku['id']) ?>" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="<?= site_url('gudang/delete/' . $BahanBaku['id']) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?');">Hapus</a>
                             </td>
                         </tr>
                         <?php endforeach; ?>

@@ -10,6 +10,8 @@ $routes->post('/checklogin', 'AuthController::LoginAuth');
 $routes->get('/logout', 'AuthController::logout');
 
 $routes->get('/dashboard', 'Dashboard::index');
+
+
 $routes->get('/gudang', 'GudangController::index', ['filter' => 'auth:gudang']);
-$routes->get('/BahanBaku/create', 'GudangController::create', ['filter' => 'auth:gudang']);
-$routes->post('/BahanBaku/Store', 'GudangController::Store', ['filter' => 'auth:gudang']);
+$routes->get('/gudang/create', 'GudangController::create', ['filter' => 'auth:gudang']);
+$routes->post('/gudang/Store', 'GudangController::Store', ['filter' => 'auth:gudang']);

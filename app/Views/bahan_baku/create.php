@@ -41,7 +41,7 @@
             </div>
         <?php endif; ?>
 
-        <form action = "<?= site_url('BahanBaku/Store') ?>" method = "post">
+        <form action = "<?= site_url('gudang/Store') ?>" method = "post">
             <div class="mb-3">
                 <label for="nama" class="form-label">nama</label>
                 <input type="text" name="name" id="name" class="form-control">
@@ -55,7 +55,7 @@
                 <input type="number " name="jumlah" id="jumlah" class="form-control">
             </div>
             <div class="mb-3">
-                <label for="satuan" class="form-label">satuan</label>
+                <label for="satuan" class="form-label">satuan(kg)</label>
                 <input type="text" name="satuan" id="satuan" class="form-control">
             </div>
             <div class="mb-3">
