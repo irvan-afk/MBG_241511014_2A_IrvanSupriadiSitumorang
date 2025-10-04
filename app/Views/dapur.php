@@ -18,17 +18,26 @@
                 <ul class="navbar-nav ms-auto">
                     <?php if(session()->get('isLoggedIn')): ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?= site_url('/logout') ?>">Logout</a>
+                            <a class="nav-link active" href="<?= site_url('/dashboard') ?>">Dashboard</a>
                         </li>
-                    <?php else: ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?= site_url('/login') ?>">Login</a>
+                            <a class="nav-link" href="<?= site_url('dapur/permintaan/create') ?>">Permintaan</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= site_url('/dapur/permintaan/status') ?>">status</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= site_url('/logout') ?>">Logout</a>
                         </li>
                     <?php endif; ?>
                 </ul>
             </div>
         </div>
     </nav>
+    <div class="container text-center mt-5">
+        <h1 class="fw-bold">Halo, Klien </h1>
+        <p class="text-muted">Selamat datang di halaman dashboard dapur.</p>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

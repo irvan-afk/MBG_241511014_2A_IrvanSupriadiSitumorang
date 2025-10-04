@@ -35,7 +35,7 @@
     </nav>
 
     <div class="container text-center mt-5">
-        <h1 class="fw-bold">Halo, Admin 👋</h1>
+        <h1 class="fw-bold">Halo, Admin </h1>
         <p class="text-muted">Selamat datang di halaman dashboard gudang.</p>
     </div>
 

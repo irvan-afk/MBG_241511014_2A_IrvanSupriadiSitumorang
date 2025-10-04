@@ -189,7 +189,6 @@ class GudangController extends BaseController
             ->where('permintaan.status', 'menunggu')
             ->findAll();
 
-        // Ambil detail permintaan (bahan yang diminta)
         foreach ($data['permintaan'] as &$req) {
             $req['detail'] = $permintaanDetailModel
                 ->select('permintaan_detail.*, bahan_baku.nama AS nama_bahan, bahan_baku.satuan')
@@ -211,8 +210,6 @@ class GudangController extends BaseController
         if (!$permintaan) {
             return redirect()->back()->with('error', 'Permintaan tidak ditemukan.');
         }
-
-        // Ambil detail permintaan
         $detail = $permintaanDetailModel->where('permintaan_id', $id)->findAll();
 
         foreach ($detail as $d) {
@@ -221,15 +218,12 @@ class GudangController extends BaseController
                 $stokBaru = $bahan['jumlah'] - $d['jumlah_diminta'];
                 if ($stokBaru < 0) $stokBaru = 0;
 
-                // Update stok
                 $bahanModel->update($bahan['id'], [
                     'jumlah' => $stokBaru,
                     'status' => $stokBaru == 0 ? 'habis' : $bahan['status']
                 ]);
             }
         }
-
-        // Ubah status permintaan jadi disetujui
         $permintaanModel->update($id, ['status' => 'disetujui']);
 
         return redirect()->to(site_url('gudang/permintaan'))->with('success', 'Permintaan berhasil disetujui dan stok diperbarui.');

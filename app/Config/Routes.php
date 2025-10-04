@@ -24,3 +24,7 @@ $routes->post('gudang/delete/(:num)', 'GudangController::delete/$1', ['filter' =
 $routes->get('gudang/permintaan', 'GudangController::permintaanList', ['filter' => 'auth:gudang']);
 $routes->post('gudang/permintaan/setujui/(:num)', 'GudangController::setujuiPermintaan/$1', ['filter' => 'auth:gudang']);
 $routes->post('gudang/permintaan/tolak/(:num)', 'GudangController::tolakPermintaan/$1', ['filter' => 'auth:gudang']);
+
+$routes->get('dapur/permintaan/status', 'DapurController::status', ['filter' => 'auth:dapur']);
+$routes->get('dapur/permintaan/create', 'DapurController::create', ['filter' => 'auth:dapur']);
+$routes->post('dapur/permintaan/store', 'DapurController::store', ['filter' => 'auth:dapur']);
